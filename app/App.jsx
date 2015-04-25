@@ -1,11 +1,11 @@
 var React = require('react');
-var ExampleComponent = require('./Components/ExampleComponent.jsx');
+var WeatherContainerLocal = require('./Components/Weather/WeatherContainerLocal.jsx');
 
 var App = React.createClass({
 
     render: function() {
         return (
-            <ExampleComponent/>
+            <WeatherContainerLocal/>
         );
     }
 
