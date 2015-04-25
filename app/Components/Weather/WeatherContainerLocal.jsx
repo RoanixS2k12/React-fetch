@@ -1,28 +1,21 @@
 var React = require('react');
 var WeatherWidget = require('./WeatherWidget.jsx');
+var data = require('../../Dummy/data.js');
 
 var WeatherContainerLocal = React.createClass({
 
     getInitialState: function() {
-        var data = [
-            { 'name' : 'Montluçon' },
-            { 'name' : 'Paris' },
-            { 'name' : 'Marseille' },
-            { 'name' : 'New York' }
-        ];
+
 
         return {
-            cities : data
+            weather : data
         };
     },
 
-    componentDidMount: function() {
-
-    },
 
     render: function() {
         return (
-            <WeatherWidget cities={this.state.cities}/>
+            <WeatherWidget weather={this.state.weather}/>
         );
     }
 
