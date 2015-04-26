@@ -8,7 +8,6 @@ var gulp = require('gulp'),
 	notify = require('gulp-notify'),
 	rename = require('gulp-rename'),
 	connect = require('gulp-connect'),
-	filter = require('gulp-filter'),
 	sass = require('gulp-sass'),
 	bourbon = require('node-bourbon');
 
@@ -48,9 +47,7 @@ gulp.task('sass', function() {
 		}))
 		.on('error', gutil.log.bind(gutil, 'Sass Error'))
 		.pipe(gulp.dest('./assets/css'))
-		//.pipe(filter('**/*.scss'))
 		.pipe(connect.reload())
-		// .pipe(notify('Compilation succeeded'));
 });
 
 /* Watching for sass file changing */
