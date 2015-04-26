@@ -3,10 +3,6 @@ var CurrentWeather = require('./CurrentWeather.jsx');
 var ForecastWeather = require('./ForecastWeather.jsx');
 
 var WeatherWidget = React.createClass({
-    //
-    // getInitialState: function(){
-    //     return {data: {cities: []}};
-    // },
 
     componentWillMount: function() {
         this.city = this.props.weather.city.name;
@@ -20,7 +16,7 @@ var WeatherWidget = React.createClass({
 
         return (
             <div className="weatherInfo">
-                <h4>Weather</h4>
+                <h4>Weather test</h4>
                 <h5>{this.city.name}</h5>
                 <h4>Current Weather</h4>
                 <CurrentWeather data={this.current}/>

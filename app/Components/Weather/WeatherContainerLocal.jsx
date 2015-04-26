@@ -5,8 +5,6 @@ var data = require('../../Dummy/data.js');
 var WeatherContainerLocal = React.createClass({
 
     getInitialState: function() {
-
-
         return {
             weather : data
         };
