@@ -10,7 +10,6 @@ var WeatherContainerLocal = React.createClass({
         };
     },
 
-
     render: function() {
         return (
             <WeatherWidget weather={this.state.weather}/>

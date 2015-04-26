@@ -1,4 +1,5 @@
-var React = require('react');
+var React = require('react')
+    WeatherIcon = require('./WeatherIcon.jsx');
 
 var CurrentWeather = React.createClass({
 
@@ -8,6 +9,7 @@ var CurrentWeather = React.createClass({
     render: function() {
         return (
             <div>
+                <WeatherIcon icon={this.weather.icon}/>
                 <span>{this.weather.main}</span>
             </div>
         );

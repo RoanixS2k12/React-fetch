@@ -1,4 +1,5 @@
 var gulp = require('gulp'),
+	gutil = require('gulp-util'),
 	source = require('vinyl-source-stream'),
 	browserify = require('browserify'),
 	watchify = require('watchify'),
@@ -6,7 +7,10 @@ var gulp = require('gulp'),
 	concat = require('gulp-concat'),
 	notify = require('gulp-notify'),
 	rename = require('gulp-rename'),
-	connect = require('gulp-connect');
+	connect = require('gulp-connect'),
+	filter = require('gulp-filter'),
+	sass = require('gulp-sass'),
+	bourbon = require('node-bourbon');
 
 gulp.task('browserify', function() {
 
@@ -19,21 +23,43 @@ gulp.task('browserify', function() {
 
 	var watcher  = watchify(bundler);
 
-	return watcher
-	.on('update', function () {
-		watcher.bundle()
-		.pipe(source('main.jsx'))
-		.pipe(rename("app.js"))
-		.pipe(gulp.dest('./build/'))
-		.pipe(connect.reload())
-		.pipe(notify('Compilation succeeded'));
-	})
-	.bundle() // Create the initial bundle when starting the task
-	.pipe(source('main.jsx'))
-	.pipe(rename("app.js"))
-	.pipe(gulp.dest('./build/'));
+	watcher.on('update', rebundle);
+	watcher.on('log', gutil.log.bind(gutil));
+
+	function rebundle() {
+		return watcher.bundle()
+			.on('error', gutil.log.bind(gutil, 'JSX Error'))
+			.pipe(source('main.jsx'))
+			.pipe(rename("app.js"))
+			.pipe(gulp.dest('./build/'))
+			.pipe(connect.reload())
+			.pipe(notify('Compilation succeeded'));
+	}
+
+	return rebundle();
+
 });
 
+/* Compiling sass files */
+gulp.task('sass', function() {
+	gulp.src('./sass/**/*.scss')
+		.pipe(sass({
+			includePaths: bourbon.includePaths
+		}))
+		.on('error', gutil.log.bind(gutil, 'Sass Error'))
+		.pipe(gulp.dest('./assets/css'))
+		//.pipe(filter('**/*.scss'))
+		.pipe(connect.reload())
+		// .pipe(notify('Compilation succeeded'));
+});
+
+/* Watching for sass file changing */
+gulp.task('watch-sass', function () {
+  return gulp.watch('./sass/**/*.scss', ['sass']);
+});
+
+
+/* WEB SERVER */
 gulp.task('connect', function() {
 	connect.server({
 		port : 8081,
@@ -43,4 +69,4 @@ gulp.task('connect', function() {
 });
 
 // Just running the two tasks
-gulp.task('default', ['connect', 'browserify']);
+gulp.task('default', ['connect', 'browserify', 'watch-sass']);
