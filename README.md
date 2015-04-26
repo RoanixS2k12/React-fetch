@@ -1,13 +1,7 @@
 ## **React fetch** ##
 
 
-----------
-
-
 This is a simple repository to try and play with React and some other tools.
-
-
-----------
 
 
 ## Installation ##
